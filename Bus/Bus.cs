@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace Bus
 {
@@ -16,6 +17,11 @@ namespace Bus
             Stations = stations;
             Data.AllBuses.Add(this);
             Data.BusDict[number] = stations;
+        }
+
+        public bool CanMoveToStation(Station station)
+        {
+            return Stations.Contains(station);
         }
     }
 }

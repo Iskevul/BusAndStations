@@ -37,5 +37,10 @@ namespace Bus
                 StDict[st.Name] = st.BusArr;
             }
         }
+
+        public static bool CanMoveToStation(Bus bus, Station station)
+        {
+            return BusDict.ContainsKey(bus.Number);
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace Bus
 {
@@ -17,6 +18,11 @@ namespace Bus
             Name = name;
             Data.AllStations.Add(this);
             BusList = new List<Bus>();
+        }
+
+        public bool IsBusVisitsStation(Bus bus)
+        {
+            return BusArr.Contains(bus);
         }
     }
 }
