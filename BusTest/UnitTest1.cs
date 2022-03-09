@@ -12,7 +12,7 @@ namespace Bus
             Data.FillStArr();
             Data.FillStDict();
 
-            Bus bus = Data.AllBuses.Find(x => x.Number == 91);
+            Bus bus = Data.AllBuses.Find(x => x.Number == "91");
             Station station = Data.AllStations.Find(y => y.Name == "Высокая Гора");
 
             Assert.IsTrue(bus.CanMoveToStation(station));

@@ -7,11 +7,11 @@ namespace Bus
 {
     public class Bus
     {
-        public int Number { get; set; }
+        public string Number { get; set; }
         public Station[] Stations { get; set; }
 
         
-        public Bus(int number, Station[] stations)
+        public Bus(string number, Station[] stations)
         {
             Number = number;
             Stations = stations;
