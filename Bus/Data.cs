@@ -16,7 +16,7 @@ namespace Bus
         public static void FillStArr()
         {
 
-            foreach (var bus in Data.AllBuses)l
+            foreach (var bus in Data.AllBuses)
             {
                 foreach (var st in bus.Stations)
                 {
