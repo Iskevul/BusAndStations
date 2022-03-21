@@ -67,10 +67,5 @@ namespace Bus
             
             return numbers;
         }
-
-        //public static bool CanMoveToStation(Bus bus, Station station)
-        //{
-        //    return BusDict.ContainsKey(bus.Number);
-        //}
     }
 }

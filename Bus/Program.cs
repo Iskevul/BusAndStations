@@ -50,22 +50,6 @@ namespace Bus
 
                         break;
 
-                    //case "BUSES_FOR_STOP":
-                    //    string stationName = command[1];
-                    //    List<string> busNumbers = new List<string>(); 
-                    //    if (Data.StDict.ContainsKey(stationName))
-                    //    {
-                    //        foreach (var bus in Data.StDict[stationName])
-                    //        {
-                    //            busNumbers.Add(bus.GetNumber());
-                    //        }
-                    //        string result = String.Join(',', busNumbers);
-                    //        Console.WriteLine($"{result}");
-                    //        break;
-                    //    }
-                    //    Console.WriteLine("No stop");
-                    //    break;
-
                     case "BUSES_FOR_STOP":
                         string stationName = command[1];
                         if (Data.StDict.ContainsKey(stationName))
@@ -79,26 +63,6 @@ namespace Bus
                             Console.WriteLine("No stop");
                         }
                         break;
-
-                    //case "STOPS_FOR_BUS":
-                    //    string busNumber = command[1];
-                    //    List<string> stationNames = new List<string>();
-                    //    if (Data.BusDict.ContainsKey(busNumber))
-                    //    {
-                    //        foreach (var st in Data.BusDict[busNumber])
-                    //        {
-                    //            List<string> buses = new List<string>(); 
-                    //            foreach (var bus in Data.StDict[st.GetName()])
-                    //            {
-                    //                buses.Add(bus.GetNumber().ToString());
-                    //            }
-                    //            string result = String.Join(' ', buses);
-                    //            Console.WriteLine($"Stop {st.GetName()}: {result}");
-                    //        }
-                    //        break;
-                    //    }
-                    //    Console.WriteLine("No bus");
-                    //    break;
 
                     case "STOPS_FOR_BUS":
                         string busNumber = command[1];
