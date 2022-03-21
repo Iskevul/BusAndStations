@@ -10,18 +10,19 @@ namespace Bus
 
         public static List<Bus> AllBuses = new List<Bus>();
         
-        public static Dictionary<string, Station[]> BusDict = new Dictionary<string, Station[]>();
-        public static Dictionary<string, Bus[]> StDict = new Dictionary<string, Bus[]>();
+        public static Dictionary<string, List<Station>> BusDict = new Dictionary<string, List<Station>>();
+        public static Dictionary<string, List<Bus>> StDict = new Dictionary<string, List<Bus>>();
+
 
         public static void FillStArr()
         {
 
             foreach (var bus in Data.AllBuses)
             {
-                foreach (var st in bus.Stations)
+                foreach (var st in bus.GetStations())
                 {
-                    if (!st.BusList.Contains(bus))
-                        st.BusList.Add(bus);
+                    if (!st.GetBusList().Contains(bus))
+                        st.GetBusList().Add(bus);
                 }
             }
         }
@@ -30,12 +31,7 @@ namespace Bus
         {
             foreach (var station in Data.AllStations)
             {
-                station.BusArr = station.BusList.ToArray();
-            }
-
-            foreach (var st in Data.AllStations)
-            {
-                StDict[st.Name] = st.BusArr;
+                StDict[station.GetName()] = station.GetBusList();
             }
         }
 
@@ -58,6 +54,18 @@ namespace Bus
             Bus bus91 = new Bus("91", new Station[] { st1, st2, st4, st6, st7, st8 });
             Bus bus63 = new Bus("63", new Station[] { st3, st9, st10, st11, st13 });
             Bus bus33 = new Bus("33", new Station[] { st9, st10, st12, st13 });
+        }
+
+        public static List<string> FindBusesForStation(string name)
+        {
+            List<string> numbers = new List<string>();
+            List<Bus> buses = StDict[name];
+            foreach (var bus in buses)
+            {
+                numbers.Add(bus.GetNumber());
+            }
+            
+            return numbers;
         }
 
         //public static bool CanMoveToStation(Bus bus, Station station)

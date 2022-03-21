@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
 
 namespace Bus
@@ -8,17 +7,6 @@ namespace Bus
     {
         static void Main(string[] args)
         {
-            //Data.FillData();
-            //Data.FillStArr();
-            //Data.FillStDict();
-            //
-            //Console.WriteLine("Введите название остановки:");
-            //string statName = Console.ReadLine();
-            //
-            //foreach (var station in Data.StDict[statName])
-            //{
-            //    Console.WriteLine(station.Number);
-            //}
             string line;
             int amount = Convert.ToInt32(Console.ReadLine());
             while ((line = Console.ReadLine()) != null && amount >= 0)
@@ -32,13 +20,13 @@ namespace Bus
                         {
                             foreach (var bus in Data.AllBuses)
                             {
-                                List<string> stations = new List<string>(bus.Stations.Length);
-                                foreach (var station in Data.BusDict[bus.Number])
+                                List<string> stations = new List<string>(bus.GetStations().Length);
+                                foreach (var station in Data.BusDict[bus.GetNumber()])
                                 {
-                                    stations.Add(station.Name);
+                                    stations.Add(station.GetName());
                                 }
                                 var stringStations = String.Join(' ', stations);
-                                Console.WriteLine($"Bus {bus.Number}: {stringStations}");
+                                Console.WriteLine($"Bus {bus.GetNumber()}: {stringStations}");
                             }
                             break;
                         }
@@ -51,30 +39,66 @@ namespace Bus
                         int count = Convert.ToInt32(command[2]);
 
                         Station[] stationsArr = new Station[count];
-                        for(int i = 0; i < count; i++)
+
+                        for (int i = 0; i < count; i++)
                         {
-                            stationsArr[i] = new Station(command[i + 3]);
+                            Station st = new Station(command[i + 3]);
+                            stationsArr[i] = st;
                         }
+
                         Bus newBus = new Bus(number, stationsArr);
-                        Data.FillStArr();
-                        Data.FillStDict();
+
                         break;
+
+                    //case "BUSES_FOR_STOP":
+                    //    string stationName = command[1];
+                    //    List<string> busNumbers = new List<string>(); 
+                    //    if (Data.StDict.ContainsKey(stationName))
+                    //    {
+                    //        foreach (var bus in Data.StDict[stationName])
+                    //        {
+                    //            busNumbers.Add(bus.GetNumber());
+                    //        }
+                    //        string result = String.Join(',', busNumbers);
+                    //        Console.WriteLine($"{result}");
+                    //        break;
+                    //    }
+                    //    Console.WriteLine("No stop");
+                    //    break;
 
                     case "BUSES_FOR_STOP":
                         string stationName = command[1];
-                        List<string> busNumbers = new List<string>(); 
                         if (Data.StDict.ContainsKey(stationName))
                         {
-                            foreach (var bus in Data.StDict[stationName])
-                            {
-                                busNumbers.Add(bus.Number);
-                            }
-                            string result = String.Join(' ', busNumbers);
-                            Console.WriteLine($"Stop {stationName}: {result}");
-                            break;
+                            Station st = Data.AllStations.Find(x => x.GetName() == stationName);
+                            Console.Write(String.Join(" ", st.GetBusNumbers()));
+                            Console.WriteLine();
                         }
-                        Console.WriteLine("No stop");
+                        else
+                        {
+                            Console.WriteLine("No stop");
+                        }
                         break;
+
+                    //case "STOPS_FOR_BUS":
+                    //    string busNumber = command[1];
+                    //    List<string> stationNames = new List<string>();
+                    //    if (Data.BusDict.ContainsKey(busNumber))
+                    //    {
+                    //        foreach (var st in Data.BusDict[busNumber])
+                    //        {
+                    //            List<string> buses = new List<string>(); 
+                    //            foreach (var bus in Data.StDict[st.GetName()])
+                    //            {
+                    //                buses.Add(bus.GetNumber().ToString());
+                    //            }
+                    //            string result = String.Join(' ', buses);
+                    //            Console.WriteLine($"Stop {st.GetName()}: {result}");
+                    //        }
+                    //        break;
+                    //    }
+                    //    Console.WriteLine("No bus");
+                    //    break;
 
                     case "STOPS_FOR_BUS":
                         string busNumber = command[1];
@@ -83,13 +107,24 @@ namespace Bus
                         {
                             foreach (var st in Data.BusDict[busNumber])
                             {
-                                stationNames.Add(st.Name);
+                                stationNames.Add(st.GetName());
                             }
-                            string result = String.Join(' ', stationNames);
-                            Console.WriteLine($"Bus {busNumber}: {result}");
+                        }
+                        else
+                        {
+                            Console.WriteLine("No bus");
                             break;
                         }
-                        Console.WriteLine("No bus");
+                        foreach (var stName in stationNames)
+                        {
+                            Station st = Data.AllStations.Find(x => x.GetName() == stName);
+                            var busNumbers = st.GetBusNumbers();
+                            busNumbers.Remove(busNumber);
+                            if (busNumbers.Count != 0)
+                                Console.WriteLine($"Stop {stName}: {String.Join(", ", busNumbers)}");
+                            else
+                                Console.WriteLine($"Stop {stName}: no interchange");
+                        }
                         break;
 
                     case "EXIT":
