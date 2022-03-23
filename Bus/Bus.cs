@@ -10,26 +10,6 @@ namespace Bus
         private string Number { get; set; }
         private Station[] Stations { get; set; }
 
-
-        //public Bus(string number, Station[] stations)
-        //{
-        //    Number = number;
-        //    Stations = stations;
-        //    Data.AllBuses.Add(this);
-        //    Data.BusDict[number] = stations.ToList<Station>();
-        //
-        //    foreach (Station station in stations)
-        //    {
-        //        station.AddToBusList(this);
-        //        if (!Data.StDict.ContainsKey(station.GetName()))
-        //            Data.StDict.Add(station.GetName(), new List<Bus>() { this });
-        //        else
-        //            Data.StDict[station.GetName()].Add(this);
-        //        
-        //    }
-        //    //Data.FillStDict();
-        //}
-
         public Bus(string number, Station[] stations)
         {
             Number = number;

@@ -6,6 +6,7 @@ namespace Bus
 {
     public static class Data
     {
+        public static List<string> stations = new List<string>();
         public static List<Station> AllStations = new List<Station>();
 
         public static List<Bus> AllBuses = new List<Bus>();
@@ -53,19 +54,84 @@ namespace Bus
 
             Bus bus91 = new Bus("91", new Station[] { st1, st2, st4, st6, st7, st8 });
             Bus bus63 = new Bus("63", new Station[] { st3, st9, st10, st11, st13 });
-            Bus bus33 = new Bus("33", new Station[] { st9, st10, st12, st13 });
+            Bus bus33 = new Bus("33", new Station[] { st1, st9, st10, st12, st13 });
         }
-
-        public static List<string> FindBusesForStation(string name)
+        public static string FindBusesForStation(string name)
         {
-            List<string> numbers = new List<string>();
-            List<Bus> buses = StDict[name];
-            foreach (var bus in buses)
-            {
-                numbers.Add(bus.GetNumber());
-            }
             
-            return numbers;
+            if (Data.StDict.ContainsKey(name))
+            {
+                Station st = AllStations.Find(x => x.GetName() == name);
+                return String.Join(" ", st.GetBusNumbers());
+                Console.WriteLine();
+            }
+            else
+            {
+                return "No stop";
+            }
+        }
+        public static void FindStationsForBus(string number)
+        {
+            List<string> stationNames = new List<string>();
+            if (Data.BusDict.ContainsKey(number))
+            {
+                foreach (var st in Data.BusDict[number])
+                {
+                    stationNames.Add(st.GetName());
+                }
+            }
+            else
+            {
+                Console.WriteLine("No bus"); 
+            }
+            foreach (var stName in stationNames)
+            {
+                Station st = Data.AllStations.Find(x => x.GetName() == stName);
+                var busNumbers = st.GetBusNumbers();
+                busNumbers.Remove(number);
+                if (busNumbers.Count != 0)
+                {
+                    Console.WriteLine($"Stop {stName}: {String.Join(", ", busNumbers)}");
+
+                }
+
+                else
+                {
+                    Console.WriteLine($"Stop {stName}: no interchange" );
+                }
+            }
+        }
+        public static List<string> FindStations(string number)
+        {
+            List<string> stationNames = new List<string>();
+            if (Data.BusDict.ContainsKey(number))
+            {
+                foreach (var st in Data.BusDict[number])
+                {
+                    stationNames.Add(st.GetName());
+                }
+            }
+            else
+            {
+                return new List<string>() { "No bus" };
+            }
+            foreach (var stName in stationNames)
+            {
+                Station st = Data.AllStations.Find(x => x.GetName() == stName);
+                var busNumbers = st.GetBusNumbers();
+                busNumbers.Remove(number);
+                if (busNumbers.Count != 0)
+                {
+                    stations.Add($"Stop {stName}: {String.Join(", ", busNumbers)}");
+
+                }
+
+                else
+                {
+                    stations.Add($"Stop {stName}: no interchange");
+                }
+            }
+            return stations;
         }
     }
 }

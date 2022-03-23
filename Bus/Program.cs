@@ -52,42 +52,16 @@ namespace Bus
 
                     case "BUSES_FOR_STOP":
                         string stationName = command[1];
-                        if (Data.StDict.ContainsKey(stationName))
-                        {
-                            Station st = Data.AllStations.Find(x => x.GetName() == stationName);
-                            Console.Write(String.Join(" ", st.GetBusNumbers()));
-                            Console.WriteLine();
-                        }
-                        else
-                        {
-                            Console.WriteLine("No stop");
-                        }
+                        Console.WriteLine(Data.FindBusesForStation(stationName));
                         break;
 
                     case "STOPS_FOR_BUS":
                         string busNumber = command[1];
-                        List<string> stationNames = new List<string>();
-                        if (Data.BusDict.ContainsKey(busNumber))
+
+                        //onsole.WriteLine(Data.FindStations(busNumber)); 
+                        foreach (var station in Data.FindStations(busNumber))
                         {
-                            foreach (var st in Data.BusDict[busNumber])
-                            {
-                                stationNames.Add(st.GetName());
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine("No bus");
-                            break;
-                        }
-                        foreach (var stName in stationNames)
-                        {
-                            Station st = Data.AllStations.Find(x => x.GetName() == stName);
-                            var busNumbers = st.GetBusNumbers();
-                            busNumbers.Remove(busNumber);
-                            if (busNumbers.Count != 0)
-                                Console.WriteLine($"Stop {stName}: {String.Join(", ", busNumbers)}");
-                            else
-                                Console.WriteLine($"Stop {stName}: no interchange");
+                            Console.WriteLine(station);
                         }
                         break;
 
