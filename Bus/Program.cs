@@ -57,9 +57,7 @@ namespace Bus
 
                     case "STOPS_FOR_BUS":
                         string busNumber = command[1];
-
-                        //onsole.WriteLine(Data.FindStations(busNumber)); 
-                        foreach (var station in Data.FindStations(busNumber))
+                        foreach (var station in Data.FindStationsForBus(busNumber))
                         {
                             Console.WriteLine(station);
                         }

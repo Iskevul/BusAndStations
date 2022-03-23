@@ -1,4 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 
 namespace Bus
 {
@@ -29,13 +30,6 @@ namespace Bus
             Bus bus63 = new Bus("63", new Station[] { st2, st3 });
             string expectedBuses = "91";
             Assert.AreEqual(expectedBuses, Data.FindBusesForStation("ЦУМ"));
-        }
-        [TestMethod]
-        public void StationsForBusTest()
-        {
-            string expectedStations = "Stop ЦУМ: no interchange" +
-                                      "Stop Советская: 63";
-            Assert.AreEqual(expectedStations, Data.FindStations("91"));
         }
     }
 }

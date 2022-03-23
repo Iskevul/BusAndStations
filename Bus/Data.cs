@@ -70,38 +70,38 @@ namespace Bus
                 return "No stop";
             }
         }
-        public static void FindStationsForBus(string number)
-        {
-            List<string> stationNames = new List<string>();
-            if (Data.BusDict.ContainsKey(number))
-            {
-                foreach (var st in Data.BusDict[number])
-                {
-                    stationNames.Add(st.GetName());
-                }
-            }
-            else
-            {
-                Console.WriteLine("No bus"); 
-            }
-            foreach (var stName in stationNames)
-            {
-                Station st = Data.AllStations.Find(x => x.GetName() == stName);
-                var busNumbers = st.GetBusNumbers();
-                busNumbers.Remove(number);
-                if (busNumbers.Count != 0)
-                {
-                    Console.WriteLine($"Stop {stName}: {String.Join(", ", busNumbers)}");
+        //public static void FindStationsForBus(string number)
+        //{
+        //    List<string> stationNames = new List<string>();
+        //    if (Data.BusDict.ContainsKey(number))
+        //    {
+        //        foreach (var st in Data.BusDict[number])
+        //        {
+        //            stationNames.Add(st.GetName());
+        //        }
+        //    }
+        //    else
+        //    {
+        //        Console.WriteLine("No bus"); 
+        //    }
+        //    foreach (var stName in stationNames)
+        //    {
+        //        Station st = Data.AllStations.Find(x => x.GetName() == stName);
+        //        var busNumbers = st.GetBusNumbers();
+        //        busNumbers.Remove(number);
+        //        if (busNumbers.Count != 0)
+        //        {
+        //            Console.WriteLine($"Stop {stName}: {String.Join(", ", busNumbers)}");
 
-                }
+        //        }
 
-                else
-                {
-                    Console.WriteLine($"Stop {stName}: no interchange" );
-                }
-            }
-        }
-        public static List<string> FindStations(string number)
+        //        else
+        //        {
+        //            Console.WriteLine($"Stop {stName}: no interchange" );
+        //        }
+        //    }
+        //}
+        public static List<string> FindStationsForBus(string number)
         {
             List<string> stationNames = new List<string>();
             if (Data.BusDict.ContainsKey(number))
